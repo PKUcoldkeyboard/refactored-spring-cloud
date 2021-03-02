@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: oss-consumer
+  cloud:  
+    nacos:
+      config:
+        prefix: oss-consumer-config
+        server-addr: 140.143.155.78:8848
+        file-extension: yaml
+        group: refactored-spring-cloud

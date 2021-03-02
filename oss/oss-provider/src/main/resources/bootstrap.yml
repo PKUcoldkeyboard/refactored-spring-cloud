@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: oss-provider
+  cloud:  
+    nacos:
+      config:
+        prefix: oss-provider-config
+        server-addr: 140.143.155.78:8848
+        file-extension: yaml
+        group: refactored-spring-cloud
