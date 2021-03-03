@@ -6,5 +6,5 @@ package com.cuterwrite.service;
  * @create 2021-03-02 00:39:58 
  */
 public interface IOssService {	
-	void uploadFile(byte[] bytes, String fileName);
+	String uploadFile(byte[] bytes, String fileName);
 }
