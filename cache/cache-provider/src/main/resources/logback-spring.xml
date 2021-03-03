@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+    <!--属性变量-->
+    <property name="LOG_STASH_HOST" value="140.143.155.78"/>
+    <property name="APP_NAME" value="spring.application.name"/>
+    <property name="CONSOLE_LOG_PATTERN" value="%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
+    <contextName>${APP_NAME}</contextName>
+     <!-- 控制台输出 -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+        <!-- 日志输出编码 -->
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            <charset>utf8</charset>
+        </encoder>
+    </appender>
+	<!--ERROR日志输出到LogStash-->
+	<appender name="LOG_STASH_ERROR" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+		<!-- 过滤器，只记录ERROR级别的日志 -->
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>ERROR</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+	    <destination>${LOG_STASH_HOST}:24222</destination>
+	    <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder"/>
+	</appender>
+    <root level="INFO">
+        <appender-ref ref="LOG_STASH_ERROR"/>
+    	<appender-ref ref="CONSOLE"/>
+    </root>
+</configuration>
