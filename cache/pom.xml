@@ -10,5 +10,6 @@
   <modules>
   	<module>cache-api</module>
   	<module>cache-provider</module>
+  	<module>cache-consumer</module>
   </modules>
 </project>

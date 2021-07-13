@@ -76,8 +76,8 @@
     <modules>
         <module>cache</module>
         <module>gateway</module>
-        <module>auth</module>
         <module>oss</module>
         <module>common</module>
+        <module>auth-server</module>
     </modules>
 </project>
