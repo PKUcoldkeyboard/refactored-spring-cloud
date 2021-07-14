@@ -79,5 +79,6 @@
         <module>oss</module>
         <module>common</module>
         <module>auth-server</module>
+        <module>kafka</module>
     </modules>
 </project>
