@@ -1,6 +1,5 @@
 package com.cuterwrite;
 
-import java.util.Map;
 
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cuterwrite.result.Result;
 import com.cuterwrite.service.ICacheService;
+import com.cuterwrite.service.IQueryCacheService;
 
 /**  
  * @author Pang S.Z.
@@ -21,9 +21,17 @@ public class CacheController {
 	@DubboReference
 	ICacheService service;
 	
+	@DubboReference
+	IQueryCacheService queryService;
+	
 	@GetMapping("/addCache")
 	public Result add(@RequestParam String text){
 		service.put("text", text);
 		return Result.ok();
+	}
+	
+	@GetMapping("/query")
+	public Result get(@RequestParam String key) {
+		return Result.ok(queryService.get(key));
 	}
 }

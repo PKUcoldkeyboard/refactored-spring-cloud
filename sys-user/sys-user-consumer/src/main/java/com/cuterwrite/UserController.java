@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cuterwrite.entity.SysUser;
 import com.cuterwrite.result.Result;
 import com.cuterwrite.service.IUserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 
 /**  
@@ -37,7 +38,7 @@ public class UserController {
 	}
 	
 	@GetMapping("/{id}")
-	public Result getById(@PathVariable Long id) {
+	public Result getById(@PathVariable Long id) throws JsonProcessingException {
 		SysUser user = service.getOne(id);
 		return Result.ok(user);
 	}
