@@ -1,10 +1,13 @@
 package com.cuterwrite.entity;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,6 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -24,7 +29,7 @@ import lombok.Setter;
 @Table(name = "sys_user")
 @Setter
 @Getter
-public class SysUser {
+public class SysUser implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,8 +42,9 @@ public class SysUser {
 	@Column(name = "password", nullable = false, length = 80)
 	private String password;
 	
-	@ManyToMany(targetEntity = SysRole.class)
+	@ManyToMany(targetEntity = SysRole.class, fetch = FetchType.EAGER)
+	@JsonIgnoreProperties(value = {"users"})
 	@JoinTable(name = "sys_user_role", joinColumns = {@JoinColumn(name = "sys_user_id", referencedColumnName = "id")},
 			   inverseJoinColumns = {@JoinColumn(name = "sys_role_id",referencedColumnName = "id")})
-	private Set<SysRole> roles = new HashSet<>();
+	private List<SysRole> roles = new ArrayList<SysRole>();
 }

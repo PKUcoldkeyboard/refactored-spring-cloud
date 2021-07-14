@@ -80,5 +80,6 @@
         <module>common</module>
         <module>auth-server</module>
         <module>kafka</module>
+        <module>sys-user</module>
     </modules>
 </project>

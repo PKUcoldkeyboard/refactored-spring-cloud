@@ -3,7 +3,7 @@ package com.cuterwrite.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import com.cuterwrite.dao.SysUserDao;
+import com.cuterwrite.entity.SysRole;
 import com.cuterwrite.entity.SysUser;
 
 import lombok.extern.slf4j.Slf4j;
@@ -24,14 +24,14 @@ import lombok.extern.slf4j.Slf4j;
 @Component(value = "kiteUserDetailsService")
 public class KiteUserDetailsService implements UserDetailsService {
 	
-	@Autowired
-	private SysUserDao userDao;
+	@DubboReference
+	IUserService service;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		log.info("username is:" + username);
 		//查询数据库，todo
-		SysUser user = userDao.findByUsername(username);
+		SysUser user = service.getByUsername(username);
 		if (user == null) {
 			throw new UsernameNotFoundException("the user is not found");
 		} else {
@@ -40,9 +40,11 @@ public class KiteUserDetailsService implements UserDetailsService {
 			 * Iterator<SysRole> roles = user.getRoles().iterator(); SysRole role =
 			 * roles.next();
 			 */
-			String roleName = "ROLE_ADMIN";
+			List<SysRole> roles = user.getRoles();
 			List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-			authorities.add(new SimpleGrantedAuthority(roleName));
+			for (SysRole role : roles) {
+				authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
+			}
 			//查询密码
 			String password = user.getPassword();
 			return new User(username, password, authorities);

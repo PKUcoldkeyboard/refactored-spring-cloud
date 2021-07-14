@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: sys-user-provider
+  cloud:  
+    nacos:
+      config:
+        prefix: sys-user-provider-config
+        server-addr: 140.143.155.78:8848
+        file-extension: yaml
+        group: refactored-spring-cloud
