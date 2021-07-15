@@ -38,4 +38,13 @@
             <artifactId>spring-cloud-starter</artifactId>
         </dependency>
   </dependencies>
+      <build>
+        <plugins>
+            <plugin>
+                <!--该插件主要用途：构建可执行的JAR -->
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>
