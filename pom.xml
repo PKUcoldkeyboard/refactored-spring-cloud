@@ -81,5 +81,6 @@
         <module>auth-server</module>
         <module>kafka</module>
         <module>sys-user</module>
+        <module>picx-uploader</module>
     </modules>
 </project>

@@ -31,7 +31,7 @@ public class UserController {
 	@DubboReference
 	IUserService service;
 	
-	@GetMapping("/")
+	@GetMapping("")
 	public Result getList() {
 		List<SysUser> userList = service.getList();
 		return Result.ok(userList);
@@ -43,7 +43,7 @@ public class UserController {
 		return Result.ok(user);
 	}
 	
-	@PostMapping("/")
+	@PostMapping("")
 	public Result create(@RequestBody SysUser user) {
 		String pass = user.getPassword();
 		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -52,7 +52,7 @@ public class UserController {
 		return Result.ok();
 	}
 	
-	@PutMapping("/")
+	@PutMapping("")
 	public Result update(@RequestBody SysUser user) {
 		service.updateOne(user);
 		return Result.ok();

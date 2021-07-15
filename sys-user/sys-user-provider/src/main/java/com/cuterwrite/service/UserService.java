@@ -47,7 +47,8 @@ public class UserService implements IUserService{
 			if (user != null) {
 				//这里有一个坑：SysUser对象里是有SysRole的数组的，需要使用@JSonIgnoreProperties处理
 				//这个注解是Jackson提供的，所以需要使用jackson
-				cacheService.put("user_" + id, mapper.writeValueAsString(user));
+				//默认过期时间1800秒
+				cacheService.put("user_" + id, mapper.writeValueAsString(user), 1800);
 			}
 		} else {
 			//user = BeanUtil.toBean(queryCacheService.get("user_" + id), SysUser.class);
